@@ -1,0 +1,542 @@
+import { useState, useEffect, useRef } from "react";
+
+const C = {
+  neon: "#00D4FF",
+  neonDim: "#0099CC",
+  neonGlow: "#00D4FF66",
+  neonHot: "#40E8FF",
+  void: "#020408",
+  deep: "#040B14",
+  surface: "#0A1628",
+  surfaceLight: "#0E1F38",
+  border: "#0C2340",
+  borderGlow: "#00D4FF22",
+  white: "#E8F4FF",
+  gray: "#5A7A9A",
+  grayLight: "#8AB4D8",
+};
+
+function useInView(threshold = 0.12) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(([e]) => {
+      if (e.isIntersecting) { setVisible(true); obs.disconnect(); }
+    }, { threshold });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [threshold]);
+  return [ref, visible];
+}
+
+function Navbar() {
+  const [scrolled, setScrolled] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", fn);
+    return () => window.removeEventListener("scroll", fn);
+  }, []);
+
+  const linkStyle = {
+    color: C.grayLight, textDecoration: "none", fontSize: 13, fontFamily: "'Rajdhani', sans-serif",
+    letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 500,
+    transition: "color 0.3s, text-shadow 0.3s", cursor: "pointer",
+  };
+
+  return (
+    <nav style={{
+      position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+      background: scrolled ? "rgba(4,11,20,0.88)" : "transparent",
+      backdropFilter: scrolled ? "blur(20px) saturate(1.4)" : "none",
+      borderBottom: `1px solid ${scrolled ? C.borderGlow : "transparent"}`,
+      transition: "all 0.5s ease", padding: "0 clamp(1.5rem, 5vw, 4rem)",
+    }}>
+      <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 68 }}>
+        <a href="#hero" style={{ textDecoration: "none" }}>
+          <span className="neon-breathe" style={{
+            fontFamily: "'Orbitron', sans-serif", fontSize: 24, fontWeight: 900, letterSpacing: "0.08em",
+            color: C.neon,
+          }}>BRDG</span>
+        </a>
+
+        <div style={{ display: "flex", alignItems: "center", gap: 36 }} className="nav-desktop">
+          <div style={{ position: "relative" }}
+            onMouseEnter={() => setDropdownOpen(true)}
+            onMouseLeave={() => setDropdownOpen(false)}>
+            <a href="#" style={linkStyle}
+              onMouseOver={(e) => { e.target.style.color = C.neon; e.target.style.textShadow = `0 0 12px ${C.neonGlow}`; }}
+              onMouseOut={(e) => { e.target.style.color = C.grayLight; e.target.style.textShadow = "none"; }}>
+              Products ▾
+            </a>
+            {dropdownOpen && (
+              <div style={{
+                position: "absolute", top: "100%", left: -16, marginTop: 12,
+                background: C.surface, border: `1px solid ${C.border}`,
+                borderRadius: 4, padding: 6, minWidth: 220,
+                boxShadow: `0 0 30px ${C.neon}11, 0 20px 60px rgba(0,0,0,0.7)`,
+              }}>
+                <a href="#fleetpro" style={{
+                  display: "block", padding: "12px 16px", borderRadius: 3, textDecoration: "none",
+                  borderLeft: "2px solid transparent", transition: "all 0.2s",
+                }}
+                  onMouseOver={(e) => { e.currentTarget.style.background = `${C.neon}08`; e.currentTarget.style.borderLeftColor = C.neon; }}
+                  onMouseOut={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderLeftColor = "transparent"; }}>
+                  <div style={{ color: C.neonHot, fontSize: 14, fontWeight: 600, fontFamily: "'Rajdhani', sans-serif", letterSpacing: "0.05em" }}>FLEET PRO</div>
+                  <div style={{ color: C.gray, fontSize: 11, marginTop: 3, fontFamily: "'Rajdhani', sans-serif", letterSpacing: "0.04em" }}>Fleet Management SaaS</div>
+                </a>
+              </div>
+            )}
+          </div>
+
+          {[
+            { label: "Services", href: "#services" },
+            { label: "Why BRDG", href: "#why" },
+          ].map((item) => (
+            <a key={item.label} href={item.href} style={linkStyle}
+              onMouseOver={(e) => { e.target.style.color = C.neon; e.target.style.textShadow = `0 0 12px ${C.neonGlow}`; }}
+              onMouseOut={(e) => { e.target.style.color = C.grayLight; e.target.style.textShadow = "none"; }}>
+              {item.label}
+            </a>
+          ))}
+
+          <a href="#start" className="nav-cta" style={{
+            background: "transparent", color: C.neon, padding: "8px 24px",
+            border: `1px solid ${C.neon}66`, borderRadius: 2,
+            fontSize: 12, fontWeight: 700, textDecoration: "none",
+            fontFamily: "'Orbitron', sans-serif", letterSpacing: "0.1em", textTransform: "uppercase",
+            boxShadow: `0 0 15px ${C.neon}22, inset 0 0 15px ${C.neon}08`,
+            transition: "all 0.3s ease",
+          }}
+            onMouseOver={(e) => { e.target.style.background = `${C.neon}15`; e.target.style.boxShadow = `0 0 30px ${C.neon}44, inset 0 0 20px ${C.neon}15`; e.target.style.borderColor = C.neon; }}
+            onMouseOut={(e) => { e.target.style.background = "transparent"; e.target.style.boxShadow = `0 0 15px ${C.neon}22, inset 0 0 15px ${C.neon}08`; e.target.style.borderColor = `${C.neon}66`; }}>
+            Start a project
+          </a>
+        </div>
+
+        <button onClick={() => setMobileOpen(!mobileOpen)} className="nav-mobile-btn" style={{
+          display: "none", background: "none", border: `1px solid ${C.border}`,
+          color: C.neon, fontSize: 20, cursor: "pointer", padding: "6px 10px",
+          fontFamily: "'Orbitron', sans-serif",
+        }}>{mobileOpen ? "✕" : "☰"}</button>
+      </div>
+
+      {mobileOpen && (
+        <div className="nav-mobile-menu" style={{
+          background: C.deep, padding: "1rem 2rem 2rem",
+          borderTop: `1px solid ${C.border}`,
+        }}>
+          {[
+            { label: "Fleet Pro", href: "#fleetpro" },
+            { label: "Services", href: "#services" },
+            { label: "Why BRDG", href: "#why" },
+          ].map((item) => (
+            <a key={item.label} href={item.href} onClick={() => setMobileOpen(false)}
+              style={{ display: "block", padding: "14px 0", color: C.grayLight, textDecoration: "none", fontSize: 14, fontFamily: "'Rajdhani', sans-serif", letterSpacing: "0.1em", textTransform: "uppercase", borderBottom: `1px solid ${C.border}` }}>
+              {item.label}
+            </a>
+          ))}
+          <a href="#start" onClick={() => setMobileOpen(false)} style={{
+            display: "inline-block", marginTop: 20, color: C.neon, padding: "10px 24px",
+            border: `1px solid ${C.neon}66`, fontWeight: 700, textDecoration: "none",
+            fontFamily: "'Orbitron', sans-serif", fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase",
+          }}>Start a project</a>
+        </div>
+      )}
+    </nav>
+  );
+}
+
+function TronGrid() {
+  return (
+    <div style={{ position: "absolute", inset: 0, overflow: "hidden", perspective: "500px" }}>
+      <div style={{
+        position: "absolute", bottom: 0, left: "-50%", right: "-50%", height: "60%",
+        transformOrigin: "center bottom", transform: "rotateX(60deg)",
+        backgroundImage: `linear-gradient(${C.neon}18 1px, transparent 1px), linear-gradient(90deg, ${C.neon}18 1px, transparent 1px)`,
+        backgroundSize: "60px 60px",
+        maskImage: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 90%)",
+        WebkitMaskImage: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 90%)",
+        animation: "gridScroll 4s linear infinite",
+      }} />
+      <div style={{
+        position: "absolute", top: "15%", left: "50%", transform: "translateX(-50%)",
+        width: "80%", height: "300px",
+        background: `radial-gradient(ellipse, ${C.neon}08 0%, transparent 70%)`,
+      }} />
+      <div style={{
+        position: "absolute", top: "42%", left: 0, right: 0, height: 1,
+        background: `linear-gradient(90deg, transparent, ${C.neon}33, ${C.neon}55, ${C.neon}33, transparent)`,
+        boxShadow: `0 0 20px ${C.neon}33, 0 0 60px ${C.neon}11`,
+      }} />
+    </div>
+  );
+}
+
+function Hero() {
+  const [ref, visible] = useInView(0.05);
+  return (
+    <section id="hero" ref={ref} style={{
+      minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+      textAlign: "center", position: "relative", overflow: "hidden",
+      background: `linear-gradient(180deg, ${C.void} 0%, ${C.deep} 40%, #051020 70%, ${C.deep} 100%)`,
+      padding: "120px 1.5rem 80px",
+    }}>
+      <TronGrid />
+      <div style={{
+        position: "relative", zIndex: 2,
+        opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(50px)",
+        transition: "all 1.2s cubic-bezier(0.16, 1, 0.32, 1)",
+      }}>
+        <h1 className="neon-breathe-hero" style={{
+          fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(4.5rem, 14vw, 12rem)", fontWeight: 900,
+          color: C.neon, lineHeight: 0.9, letterSpacing: "0.06em", margin: 0,
+        }}>BRDG</h1>
+
+        <div style={{
+          width: visible ? "60%" : "0%", height: 2, margin: "16px auto 0",
+          background: `linear-gradient(90deg, transparent, ${C.neon}, transparent)`,
+          boxShadow: `0 0 12px ${C.neon}88, 0 0 30px ${C.neonGlow}`,
+          transition: "width 1s ease 0.5s",
+        }} />
+
+        <div style={{
+          display: "inline-flex", alignItems: "center", gap: 10, marginTop: 28,
+          padding: "8px 20px", border: `1px solid ${C.border}`, background: `${C.neon}06`,
+          opacity: visible ? 1 : 0, transition: "opacity 0.8s ease 0.6s",
+        }}>
+          <span className="dot-pulse" style={{ width: 6, height: 6, background: C.neon }} />
+          <span style={{ color: C.gray, fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", fontFamily: "'Rajdhani', sans-serif", fontWeight: 500 }}>
+            Bridging Real-World Data with Ground Operations
+          </span>
+        </div>
+
+        <p style={{
+          color: C.grayLight, fontSize: "clamp(0.95rem, 1.8vw, 1.1rem)", lineHeight: 1.8,
+          maxWidth: 540, margin: "28px auto 0", fontFamily: "'Rajdhani', sans-serif", fontWeight: 400, letterSpacing: "0.02em",
+          opacity: visible ? 1 : 0, transition: "opacity 0.8s ease 0.8s",
+        }}>
+          We build high-performance SaaS products and custom software that solve real business challenges. From our own tools to bespoke solutions — built for impact.
+        </p>
+
+        <div style={{
+          display: "flex", gap: 20, justifyContent: "center", marginTop: 44, flexWrap: "wrap",
+          opacity: visible ? 1 : 0, transition: "opacity 0.8s ease 1s",
+        }}>
+          <a href="#start" style={{
+            background: `linear-gradient(135deg, ${C.neon}22, ${C.neon}11)`,
+            color: C.neon, padding: "14px 36px", border: `1px solid ${C.neon}88`,
+            fontSize: 13, fontWeight: 700, textDecoration: "none",
+            fontFamily: "'Orbitron', sans-serif", letterSpacing: "0.08em", textTransform: "uppercase",
+            boxShadow: `0 0 25px ${C.neon}33, inset 0 0 25px ${C.neon}11`,
+            transition: "all 0.3s ease",
+          }}
+            onMouseOver={(e) => { e.target.style.boxShadow = `0 0 40px ${C.neon}55, inset 0 0 30px ${C.neon}22, 0 0 80px ${C.neon}22`; e.target.style.background = `linear-gradient(135deg, ${C.neon}33, ${C.neon}18)`; }}
+            onMouseOut={(e) => { e.target.style.boxShadow = `0 0 25px ${C.neon}33, inset 0 0 25px ${C.neon}11`; e.target.style.background = `linear-gradient(135deg, ${C.neon}22, ${C.neon}11)`; }}>
+            Start a project →
+          </a>
+          <a href="#services" style={{
+            color: C.grayLight, padding: "14px 36px", fontSize: 13, textDecoration: "none",
+            fontFamily: "'Rajdhani', sans-serif", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase",
+            border: `1px solid ${C.border}`, transition: "all 0.3s ease",
+          }}
+            onMouseOver={(e) => { e.target.style.borderColor = `${C.neon}44`; e.target.style.color = C.neon; e.target.style.boxShadow = `0 0 20px ${C.neon}11`; }}
+            onMouseOut={(e) => { e.target.style.borderColor = C.border; e.target.style.color = C.grayLight; e.target.style.boxShadow = "none"; }}>
+            Explore services
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Mission() {
+  const [ref, visible] = useInView();
+  return (
+    <section ref={ref} style={{ padding: "100px 1.5rem", textAlign: "center", background: C.deep, borderTop: `1px solid ${C.border}`, position: "relative" }}>
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.neon}33, transparent)`, boxShadow: `0 0 20px ${C.neon}22` }} />
+      <div style={{ maxWidth: 700, margin: "0 auto", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s cubic-bezier(0.16, 1, 0.32, 1)" }}>
+        <h2 className="neon-breathe" style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 800, color: C.neon, letterSpacing: "0.06em", margin: 0 }}>BRDG</h2>
+        <p style={{ color: C.grayLight, fontSize: "clamp(1rem, 2vw, 1.1rem)", lineHeight: 1.8, marginTop: 24, fontFamily: "'Rajdhani', sans-serif", letterSpacing: "0.02em" }}>
+          We don't just write code — we <strong style={{ color: C.neonHot }}>bridge the gap</strong> between the data you collect and the teams who need it most.
+          <br />Your operations deserve software built with purpose.
+        </p>
+      </div>
+    </section>
+  );
+}
+
+const SERVICES = [
+  { icon: "◆", title: "Custom Software", desc: "Tailored solutions that transform your business processes — not generic templates." },
+  { icon: "◈", title: "Data Systems", desc: "Capture, store and visualise your field data in real time." },
+  { icon: "▣", title: "Web & Mobile Apps", desc: "High-performance interfaces that teams actually enjoy using." },
+  { icon: "◎", title: "SaaS Products", desc: "Our own tools like Fleet Pro, ready to deploy for your industry." },
+  { icon: "⬡", title: "Security & Compliance", desc: "Enterprise-grade security and full regulatory compliance." },
+  { icon: "⚡", title: "Automation", desc: "Remove bottlenecks so your team can focus on what matters." },
+];
+
+function ServiceCard({ service, delay, visible }) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div onMouseEnter={() => setHovered(true)} onMouseLeave={() => setHovered(false)}
+      style={{
+        background: hovered ? `${C.neon}06` : C.surface,
+        border: `1px solid ${hovered ? C.neon + "44" : C.border}`,
+        padding: 28, position: "relative", overflow: "hidden",
+        opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)",
+        transition: `all 0.6s cubic-bezier(0.16, 1, 0.32, 1) ${delay}ms`,
+        boxShadow: hovered ? `0 0 30px ${C.neon}11, inset 0 0 30px ${C.neon}05` : "none",
+      }}>
+      <div style={{ position: "absolute", top: 0, left: 0, width: 20, height: 1, background: hovered ? C.neon : C.border, transition: "background 0.3s", boxShadow: hovered ? `0 0 8px ${C.neonGlow}` : "none" }} />
+      <div style={{ position: "absolute", top: 0, left: 0, width: 1, height: 20, background: hovered ? C.neon : C.border, transition: "background 0.3s", boxShadow: hovered ? `0 0 8px ${C.neonGlow}` : "none" }} />
+      <div style={{ position: "absolute", bottom: 0, right: 0, width: 20, height: 1, background: hovered ? C.neon : C.border, transition: "background 0.3s" }} />
+      <div style={{ position: "absolute", bottom: 0, right: 0, width: 1, height: 20, background: hovered ? C.neon : C.border, transition: "background 0.3s" }} />
+      <div style={{ fontSize: 20, marginBottom: 16, color: hovered ? C.neon : C.gray, textShadow: hovered ? `0 0 12px ${C.neonGlow}` : "none", transition: "all 0.3s" }}>{service.icon}</div>
+      <h3 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 14, fontWeight: 600, color: C.white, margin: "0 0 10px", letterSpacing: "0.04em" }}>{service.title}</h3>
+      <p style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: 14, color: C.gray, lineHeight: 1.6, margin: 0 }}>{service.desc}</p>
+    </div>
+  );
+}
+
+function Services() {
+  const [ref, visible] = useInView();
+  return (
+    <section id="services" ref={ref} style={{ padding: "100px 1.5rem", position: "relative", background: `linear-gradient(180deg, ${C.deep} 0%, ${C.void} 100%)` }}>
+      <div style={{ maxWidth: 1000, margin: "0 auto" }}>
+        <div style={{ textAlign: "center", marginBottom: 60, opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease" }}>
+          <span style={{ color: C.neon, fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase", fontFamily: "'Rajdhani', sans-serif", fontWeight: 600 }}>What we do</span>
+          <h2 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)", fontWeight: 700, color: C.white, marginTop: 12, letterSpacing: "0.04em" }}>
+            Tools that drive <span className="neon-breathe-inline">real impact</span>
+          </h2>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 16 }}>
+          {SERVICES.map((s, i) => <ServiceCard key={s.title} service={s} delay={i * 80} visible={visible} />)}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function WhyBrdg() {
+  const [ref, visible] = useInView();
+  return (
+    <section id="why" ref={ref} style={{ padding: "100px 1.5rem", background: C.deep, position: "relative", borderTop: `1px solid ${C.border}` }}>
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.neon}22, transparent)` }} />
+      <div style={{ maxWidth: 1000, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 60, alignItems: "center" }}>
+        <div style={{ opacity: visible ? 1 : 0, transform: visible ? "translateX(0)" : "translateX(-30px)", transition: "all 0.8s cubic-bezier(0.16, 1, 0.32, 1)" }}>
+          <span style={{ color: C.neon, fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase", fontFamily: "'Rajdhani', sans-serif", fontWeight: 600 }}>Why BRDG</span>
+          <h2 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 700, color: C.white, marginTop: 12, lineHeight: 1.3, letterSpacing: "0.03em" }}>
+            The bridge between your <span className="neon-breathe-inline">data and the field</span>
+          </h2>
+          <p style={{ color: C.gray, fontSize: 15, lineHeight: 1.7, marginTop: 20, fontFamily: "'Rajdhani', sans-serif" }}>
+            Businesses collect mountains of data but struggle to turn it into operational truth. BRDG closes that gap — both through our own SaaS products and custom-built software that connects real-world data directly to your ground teams.
+          </p>
+          <p style={{ color: C.gray, fontSize: 15, lineHeight: 1.7, marginTop: 16, fontFamily: "'Rajdhani', sans-serif" }}>
+            No generic solutions. No compromises. Every line of code is designed to solve <span style={{ color: C.neon, fontWeight: 600 }}>your</span> problem.
+          </p>
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", gap: 12, opacity: visible ? 1 : 0, transform: visible ? "translateX(0)" : "translateX(30px)", transition: "all 0.8s cubic-bezier(0.16, 1, 0.32, 1) 0.2s" }}>
+          {[{ value: "100%", label: "Custom-built" }, { value: "24/7", label: "Dedicated support" }, { value: "10x", label: "Faster delivery" }].map((s) => (
+            <div key={s.value} style={{ background: C.surface, border: `1px solid ${C.border}`, padding: "22px 28px", display: "flex", alignItems: "center", gap: 20, position: "relative", overflow: "hidden" }}>
+              <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 2, background: C.neon, boxShadow: `0 0 10px ${C.neonGlow}, 0 0 20px ${C.neon}22` }} />
+              <span className="neon-breathe" style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 28, fontWeight: 900, color: C.neon, minWidth: 80 }}>{s.value}</span>
+              <span style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: 15, color: C.grayLight, letterSpacing: "0.04em" }}>{s.label}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function FleetPro() {
+  const [ref, visible] = useInView();
+  const features = [
+    { icon: "▦", title: "Real-time Dashboard", desc: "KPIs, revenue forecasts, and fleet status at a glance." },
+    { icon: "▥", title: "Equipment Allocation", desc: "Drag-and-drop timeline for equipment assignments across sites." },
+    { icon: "◈", title: "Billing & Invoicing", desc: "Automated monthly invoicing with working-day calculations." },
+    { icon: "▤", title: "Plant Requests", desc: "Streamlined request → approval → allocation workflow." },
+    { icon: "◎", title: "Site Management", desc: "GPS-mapped project sites with manager assignments." },
+    { icon: "△", title: "Revenue Forecast", desc: "Australian fiscal year forecasting with cumulative views." },
+  ];
+  return (
+    <section id="fleetpro" ref={ref} style={{ padding: "100px 1.5rem", position: "relative", background: `linear-gradient(180deg, ${C.void} 0%, ${C.deep} 100%)`, borderTop: `1px solid ${C.border}` }}>
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.neon}33, transparent)`, boxShadow: `0 0 15px ${C.neon}15` }} />
+      <div style={{ maxWidth: 1000, margin: "0 auto", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s cubic-bezier(0.16, 1, 0.32, 1)" }}>
+        <div style={{ textAlign: "center", marginBottom: 60 }}>
+          <span style={{ color: C.neon, fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase", fontFamily: "'Rajdhani', sans-serif", fontWeight: 600 }}>Our Products</span>
+          <h2 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)", fontWeight: 700, color: C.white, marginTop: 12, letterSpacing: "0.04em" }}>
+            FLEET <span className="neon-breathe-inline">PRO</span>
+          </h2>
+          <p style={{ color: C.gray, fontSize: 15, lineHeight: 1.7, maxWidth: 580, margin: "16px auto 0", fontFamily: "'Rajdhani', sans-serif" }}>
+            Construction equipment fleet management — simplified. Track allocations, manage billing, forecast revenue, and keep your fleet running at peak efficiency.
+          </p>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 14 }}>
+          {features.map((f, i) => (
+            <div key={f.title} style={{ background: C.surface, border: `1px solid ${C.border}`, padding: 22, opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: `all 0.6s ease ${i * 60 + 200}ms`, position: "relative" }}>
+              <div style={{ position: "absolute", top: 0, right: 0, width: 16, height: 1, background: C.neon, opacity: 0.4 }} />
+              <div style={{ fontSize: 20, marginBottom: 12, color: C.neon, textShadow: `0 0 8px ${C.neonGlow}` }}>{f.icon}</div>
+              <h4 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 12, fontWeight: 600, color: C.white, margin: "0 0 8px", letterSpacing: "0.05em" }}>{f.title}</h4>
+              <p style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: 13, color: C.gray, lineHeight: 1.6, margin: 0 }}>{f.desc}</p>
+            </div>
+          ))}
+        </div>
+        <div style={{ textAlign: "center", marginTop: 48 }}>
+          <a href="#start" style={{ color: C.neon, padding: "12px 28px", border: `1px solid ${C.neon}44`, fontSize: 12, fontWeight: 700, textDecoration: "none", fontFamily: "'Orbitron', sans-serif", letterSpacing: "0.08em", textTransform: "uppercase", transition: "all 0.3s" }}
+            onMouseOver={(e) => { e.target.style.boxShadow = `0 0 20px ${C.neon}33`; e.target.style.borderColor = C.neon; }}
+            onMouseOut={(e) => { e.target.style.boxShadow = "none"; e.target.style.borderColor = `${C.neon}44`; }}>
+            Request a demo →
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function StartProject() {
+  const [ref, visible] = useInView();
+  const [form, setForm] = useState({ name: "", email: "", message: "" });
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = () => {
+    window.location.href = `mailto:contact@brdg-group.com?subject=Project inquiry from ${form.name}&body=${encodeURIComponent(form.message)}%0A%0AFrom: ${form.name} (${form.email})`;
+    setSubmitted(true);
+  };
+
+  const inputStyle = {
+    width: "100%", padding: "14px 16px", background: C.void, border: `1px solid ${C.border}`,
+    color: C.white, fontSize: 14, fontFamily: "'Rajdhani', sans-serif", letterSpacing: "0.02em",
+    outline: "none", boxSizing: "border-box", transition: "border-color 0.3s, box-shadow 0.3s",
+  };
+
+  return (
+    <section id="start" ref={ref} style={{ padding: "100px 1.5rem 80px", background: `linear-gradient(180deg, ${C.deep} 0%, ${C.void} 100%)`, borderTop: `1px solid ${C.border}`, position: "relative" }}>
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.neon}33, transparent)` }} />
+      <div style={{ maxWidth: 600, margin: "0 auto", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s cubic-bezier(0.16, 1, 0.32, 1)" }}>
+        <div style={{ background: C.surface, border: `1px solid ${C.border}`, padding: "clamp(32px, 5vw, 56px)", textAlign: "center", position: "relative", overflow: "hidden", boxShadow: `0 0 60px ${C.neon}08` }}>
+          <div style={{ position: "absolute", top: 0, left: 0, width: 40, height: 1, background: C.neon, boxShadow: `0 0 10px ${C.neonGlow}` }} />
+          <div style={{ position: "absolute", top: 0, left: 0, width: 1, height: 40, background: C.neon, boxShadow: `0 0 10px ${C.neonGlow}` }} />
+          <div style={{ position: "absolute", bottom: 0, right: 0, width: 40, height: 1, background: C.neon, boxShadow: `0 0 10px ${C.neonGlow}` }} />
+          <div style={{ position: "absolute", bottom: 0, right: 0, width: 1, height: 40, background: C.neon, boxShadow: `0 0 10px ${C.neonGlow}` }} />
+
+          <h2 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(1.3rem, 2.5vw, 1.7rem)", fontWeight: 700, color: C.white, margin: 0, letterSpacing: "0.04em" }}>
+            Ready to build<br /><span className="neon-breathe-inline">the tool you're missing?</span>
+          </h2>
+          <p style={{ color: C.gray, fontSize: 14, lineHeight: 1.7, marginTop: 12, fontFamily: "'Rajdhani', sans-serif" }}>
+            Let's talk about your project. From idea to deployment, we've got you — every step of the way.
+          </p>
+
+          {!submitted ? (
+            <div style={{ marginTop: 32, textAlign: "left" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 12 }}>
+                <input type="text" placeholder="Your name" value={form.name}
+                  onChange={(e) => setForm({ ...form, name: e.target.value })} style={inputStyle}
+                  onFocus={(e) => { e.target.style.borderColor = C.neon; e.target.style.boxShadow = `0 0 15px ${C.neon}22`; }}
+                  onBlur={(e) => { e.target.style.borderColor = C.border; e.target.style.boxShadow = "none"; }} />
+                <input type="email" placeholder="Email address" value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })} style={inputStyle}
+                  onFocus={(e) => { e.target.style.borderColor = C.neon; e.target.style.boxShadow = `0 0 15px ${C.neon}22`; }}
+                  onBlur={(e) => { e.target.style.borderColor = C.border; e.target.style.boxShadow = "none"; }} />
+              </div>
+              <textarea placeholder="Tell us about your project..." rows={4} value={form.message}
+                onChange={(e) => setForm({ ...form, message: e.target.value })}
+                style={{ ...inputStyle, resize: "vertical", marginBottom: 20 }}
+                onFocus={(e) => { e.target.style.borderColor = C.neon; e.target.style.boxShadow = `0 0 15px ${C.neon}22`; }}
+                onBlur={(e) => { e.target.style.borderColor = C.border; e.target.style.boxShadow = "none"; }} />
+              <button onClick={handleSubmit} style={{
+                width: "100%", background: `linear-gradient(135deg, ${C.neon}22, ${C.neon}11)`,
+                color: C.neon, padding: "14px 0", border: `1px solid ${C.neon}88`,
+                fontSize: 13, fontWeight: 700, cursor: "pointer",
+                fontFamily: "'Orbitron', sans-serif", letterSpacing: "0.08em", textTransform: "uppercase",
+                boxShadow: `0 0 25px ${C.neon}33, inset 0 0 25px ${C.neon}11`, transition: "all 0.3s",
+              }}
+                onMouseOver={(e) => { e.target.style.boxShadow = `0 0 40px ${C.neon}55, inset 0 0 30px ${C.neon}22`; }}
+                onMouseOut={(e) => { e.target.style.boxShadow = `0 0 25px ${C.neon}33, inset 0 0 25px ${C.neon}11`; }}>
+                Start a project →
+              </button>
+            </div>
+          ) : (
+            <div style={{ marginTop: 32, padding: 24, background: `${C.neon}08`, border: `1px solid ${C.neon}33` }}>
+              <p className="neon-breathe" style={{ color: C.neon, fontSize: 15, fontWeight: 600, fontFamily: "'Orbitron', sans-serif", margin: 0, letterSpacing: "0.05em" }}>✓ TRANSMISSION RECEIVED</p>
+              <p style={{ color: C.gray, fontSize: 13, fontFamily: "'Rajdhani', sans-serif", marginTop: 8 }}>We'll be in touch shortly.</p>
+            </div>
+          )}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function Footer() {
+  return (
+    <footer style={{ padding: "40px 1.5rem", background: C.void, textAlign: "center", borderTop: `1px solid ${C.border}`, position: "relative" }}>
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.neon}15, transparent)` }} />
+      <p style={{ color: C.gray, fontSize: 12, fontFamily: "'Rajdhani', sans-serif", margin: 0, letterSpacing: "0.08em" }}>
+        © {new Date().getFullYear()} BRDG — BRIDGING REAL-WORLD DATA WITH GROUND OPERATIONS
+      </p>
+      <p style={{ color: C.gray, fontSize: 11, fontFamily: "'Rajdhani', sans-serif", margin: "6px 0 0", opacity: 0.5, letterSpacing: "0.1em" }}>
+        SYDNEY, AUSTRALIA
+      </p>
+    </footer>
+  );
+}
+
+export default function App() {
+  return (
+    <div style={{ background: C.void, color: C.white, minHeight: "100vh" }}>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+        body { background: #020408; overflow-x: hidden; }
+        ::selection { background: #00D4FF33; color: #E8F4FF; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #020408; }
+        ::-webkit-scrollbar-thumb { background: #0C2340; }
+        ::-webkit-scrollbar-thumb:hover { background: #00D4FF44; }
+
+        @keyframes gridScroll {
+          0% { background-position: 0 0; }
+          100% { background-position: 0 60px; }
+        }
+        @keyframes neonBreathe {
+          0%, 100% { text-shadow: 0 0 20px #00D4FF66, 0 0 40px #00D4FF66, 0 0 80px #00D4FF22; }
+          50% { text-shadow: 0 0 10px #00D4FF33, 0 0 20px #00D4FF22, 0 0 40px #00D4FF11; }
+        }
+        @keyframes neonBreatheHero {
+          0%, 100% { text-shadow: 0 0 40px #00D4FF66, 0 0 80px #00D4FF44, 0 0 120px #00D4FF22, 0 0 200px #00D4FF11; }
+          50% { text-shadow: 0 0 20px #00D4FF44, 0 0 40px #00D4FF22, 0 0 60px #00D4FF11, 0 0 100px #00D4FF08; }
+        }
+        @keyframes dotPulse {
+          0%, 100% { opacity: 1; box-shadow: 0 0 6px #00D4FF, 0 0 12px #00D4FF66; }
+          50% { opacity: 0.3; box-shadow: 0 0 2px #00D4FF44; }
+        }
+        .neon-breathe { animation: neonBreathe 3s ease-in-out infinite; }
+        .neon-breathe-hero { animation: neonBreatheHero 4s ease-in-out infinite; }
+        .neon-breathe-inline { color: #00D4FF; animation: neonBreathe 3s ease-in-out infinite; }
+        .dot-pulse { animation: dotPulse 2s ease-in-out infinite; }
+
+        @media (max-width: 768px) {
+          .nav-desktop { display: none !important; }
+          .nav-mobile-btn { display: block !important; }
+        }
+        @media (min-width: 769px) {
+          .nav-mobile-menu { display: none !important; }
+        }
+      `}</style>
+      <Navbar />
+      <Hero />
+      <Mission />
+      <Services />
+      <WhyBrdg />
+      <FleetPro />
+      <StartProject />
+      <Footer />
+    </div>
+  );
+}
