@@ -1,19 +1,19 @@
 import { useState, useEffect, useRef } from "react";
 
 const C = {
-  neon: "#00D4FF",
-  neonDim: "#0099CC",
-  neonGlow: "#00D4FF66",
-  neonHot: "#40E8FF",
-  void: "#020408",
-  deep: "#040B14",
-  surface: "#0A1628",
-  surfaceLight: "#0E1F38",
-  border: "#0C2340",
-  borderGlow: "#00D4FF22",
-  white: "#E8F4FF",
-  gray: "#5A7A9A",
-  grayLight: "#8AB4D8",
+  neon: "#57E6E6",
+  neonDim: "#3FD0D4",
+  neonGlow: "#57E6E666",
+  neonHot: "#6AEAEA",
+  void: "#0B1120",
+  deep: "#070C18",
+  surface: "#0F1729",
+  surfaceLight: "#141D2E",
+  border: "#1A2744",
+  borderGlow: "#57E6E622",
+  white: "#E6EDF3",
+  gray: "#9CA3AF",
+  grayLight: "#E6EDF3",
 };
 
 function useInView(threshold = 0.12) {
@@ -43,7 +43,7 @@ function Navbar() {
   }, []);
 
   const linkStyle = {
-    color: C.grayLight, textDecoration: "none", fontSize: 13, fontFamily: "'Rajdhani', sans-serif",
+    color: C.grayLight, textDecoration: "none", fontSize: 13, fontFamily: "'Sora', sans-serif",
     letterSpacing: "0.12em", textTransform: "uppercase", fontWeight: 500,
     transition: "color 0.3s, text-shadow 0.3s", cursor: "pointer",
   };
@@ -59,7 +59,7 @@ function Navbar() {
       <div style={{ maxWidth: 1200, margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: 68 }}>
         <a href="#hero" style={{ textDecoration: "none" }}>
           <span className="neon-breathe" style={{
-            fontFamily: "'Orbitron', sans-serif", fontSize: 24, fontWeight: 900, letterSpacing: "0.08em",
+            fontFamily: "'Sora', sans-serif", fontSize: 24, fontWeight: 900, letterSpacing: "0.08em",
             color: C.neon,
           }}>BRDG</span>
         </a>
@@ -86,8 +86,8 @@ function Navbar() {
                 }}
                   onMouseOver={(e) => { e.currentTarget.style.background = `${C.neon}08`; e.currentTarget.style.borderLeftColor = C.neon; }}
                   onMouseOut={(e) => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderLeftColor = "transparent"; }}>
-                  <div style={{ color: C.neonHot, fontSize: 14, fontWeight: 600, fontFamily: "'Rajdhani', sans-serif", letterSpacing: "0.05em" }}>FLEET PRO</div>
-                  <div style={{ color: C.gray, fontSize: 11, marginTop: 3, fontFamily: "'Rajdhani', sans-serif", letterSpacing: "0.04em" }}>Fleet Management SaaS</div>
+                  <div style={{ color: C.neonHot, fontSize: 14, fontWeight: 600, fontFamily: "'Sora', sans-serif", letterSpacing: "0.05em" }}>FLEET PRO</div>
+                  <div style={{ color: C.gray, fontSize: 11, marginTop: 3, fontFamily: "'Sora', sans-serif", letterSpacing: "0.04em" }}>Fleet Management SaaS</div>
                 </a>
               </div>
             )}
@@ -108,12 +108,12 @@ function Navbar() {
             background: "transparent", color: C.neon, padding: "8px 24px",
             border: `1px solid ${C.neon}66`, borderRadius: 2,
             fontSize: 12, fontWeight: 700, textDecoration: "none",
-            fontFamily: "'Orbitron', sans-serif", letterSpacing: "0.1em", textTransform: "uppercase",
-            boxShadow: `0 0 15px ${C.neon}22, inset 0 0 15px ${C.neon}08`,
+            fontFamily: "'Sora', sans-serif", letterSpacing: "0.1em", textTransform: "uppercase",
+            boxShadow: `0 0 10px rgba(87, 230, 230, 0.3), 0 0 25px rgba(87, 230, 230, 0.15)`,
             transition: "all 0.3s ease",
           }}
-            onMouseOver={(e) => { e.target.style.background = `${C.neon}15`; e.target.style.boxShadow = `0 0 30px ${C.neon}44, inset 0 0 20px ${C.neon}15`; e.target.style.borderColor = C.neon; }}
-            onMouseOut={(e) => { e.target.style.background = "transparent"; e.target.style.boxShadow = `0 0 15px ${C.neon}22, inset 0 0 15px ${C.neon}08`; e.target.style.borderColor = `${C.neon}66`; }}>
+            onMouseOver={(e) => { e.target.style.background = `${C.neon}15`; e.target.style.boxShadow = `0 0 15px rgba(87, 230, 230, 0.5), 0 0 35px rgba(87, 230, 230, 0.25)`; e.target.style.borderColor = C.neon; }}
+            onMouseOut={(e) => { e.target.style.background = "transparent"; e.target.style.boxShadow = `0 0 10px rgba(87, 230, 230, 0.3), 0 0 25px rgba(87, 230, 230, 0.15)`; e.target.style.borderColor = `${C.neon}66`; }}>
             Start a project
           </a>
         </div>
@@ -121,7 +121,7 @@ function Navbar() {
         <button onClick={() => setMobileOpen(!mobileOpen)} className="nav-mobile-btn" style={{
           display: "none", background: "none", border: `1px solid ${C.border}`,
           color: C.neon, fontSize: 20, cursor: "pointer", padding: "6px 10px",
-          fontFamily: "'Orbitron', sans-serif",
+          fontFamily: "'Sora', sans-serif",
         }}>{mobileOpen ? "✕" : "☰"}</button>
       </div>
 
@@ -136,14 +136,14 @@ function Navbar() {
             { label: "Why BRDG", href: "#why" },
           ].map((item) => (
             <a key={item.label} href={item.href} onClick={() => setMobileOpen(false)}
-              style={{ display: "block", padding: "14px 0", color: C.grayLight, textDecoration: "none", fontSize: 14, fontFamily: "'Rajdhani', sans-serif", letterSpacing: "0.1em", textTransform: "uppercase", borderBottom: `1px solid ${C.border}` }}>
+              style={{ display: "block", padding: "14px 0", color: C.grayLight, textDecoration: "none", fontSize: 14, fontFamily: "'Sora', sans-serif", letterSpacing: "0.1em", textTransform: "uppercase", borderBottom: `1px solid ${C.border}` }}>
               {item.label}
             </a>
           ))}
           <a href="#start" onClick={() => setMobileOpen(false)} style={{
             display: "inline-block", marginTop: 20, color: C.neon, padding: "10px 24px",
             border: `1px solid ${C.neon}66`, fontWeight: 700, textDecoration: "none",
-            fontFamily: "'Orbitron', sans-serif", fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase",
+            fontFamily: "'Sora', sans-serif", fontSize: 12, letterSpacing: "0.1em", textTransform: "uppercase",
           }}>Start a project</a>
         </div>
       )}
@@ -157,7 +157,7 @@ function TronGrid() {
       <div style={{
         position: "absolute", bottom: 0, left: "-50%", right: "-50%", height: "60%",
         transformOrigin: "center bottom", transform: "rotateX(60deg)",
-        backgroundImage: `linear-gradient(${C.neon}18 1px, transparent 1px), linear-gradient(90deg, ${C.neon}18 1px, transparent 1px)`,
+        backgroundImage: `linear-gradient(rgba(87, 230, 230, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(87, 230, 230, 0.1) 1px, transparent 1px)`,
         backgroundSize: "60px 60px",
         maskImage: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 90%)",
         WebkitMaskImage: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 90%)",
@@ -166,12 +166,12 @@ function TronGrid() {
       <div style={{
         position: "absolute", top: "15%", left: "50%", transform: "translateX(-50%)",
         width: "80%", height: "300px",
-        background: `radial-gradient(ellipse, ${C.neon}08 0%, transparent 70%)`,
+        background: `radial-gradient(ellipse, rgba(87, 230, 230, 0.05) 0%, transparent 70%)`,
       }} />
       <div style={{
         position: "absolute", top: "42%", left: 0, right: 0, height: 1,
-        background: `linear-gradient(90deg, transparent, ${C.neon}33, ${C.neon}55, ${C.neon}33, transparent)`,
-        boxShadow: `0 0 20px ${C.neon}33, 0 0 60px ${C.neon}11`,
+        background: `linear-gradient(90deg, transparent, rgba(87, 230, 230, 0.2), rgba(87, 230, 230, 0.35), rgba(87, 230, 230, 0.2), transparent)`,
+        boxShadow: `0 0 20px rgba(87, 230, 230, 0.2), 0 0 60px rgba(63, 208, 212, 0.1)`,
       }} />
     </div>
   );
@@ -192,9 +192,14 @@ function Hero() {
         opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(50px)",
         transition: "all 1.2s cubic-bezier(0.16, 1, 0.32, 1)",
       }}>
-        <h1 className="neon-breathe-hero" style={{
-          fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(4.5rem, 14vw, 12rem)", fontWeight: 900,
-          color: C.neon, lineHeight: 0.9, letterSpacing: "0.06em", margin: 0,
+        <h1 className="hero-title-glow" style={{
+          fontFamily: "'Sora', sans-serif", fontSize: "clamp(4.5rem, 14vw, 12rem)", fontWeight: 900,
+          lineHeight: 0.9, letterSpacing: "0.06em", margin: 0,
+          background: "linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, #57E6E6 40%, #3FD0D4 100%)",
+          WebkitBackgroundClip: "text",
+          WebkitTextFillColor: "transparent",
+          backgroundClip: "text",
+          filter: "drop-shadow(0 0 12px rgba(87, 230, 230, 0.4)) drop-shadow(0 0 30px rgba(87, 230, 230, 0.2)) drop-shadow(0 0 60px rgba(63, 208, 212, 0.1))",
         }}>BRDG</h1>
 
         <div style={{
@@ -210,14 +215,14 @@ function Hero() {
           opacity: visible ? 1 : 0, transition: "opacity 0.8s ease 0.6s",
         }}>
           <span className="dot-pulse" style={{ width: 6, height: 6, background: C.neon }} />
-          <span style={{ color: C.gray, fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", fontFamily: "'Rajdhani', sans-serif", fontWeight: 500 }}>
+          <span style={{ color: C.gray, fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", fontFamily: "'Sora', sans-serif", fontWeight: 500 }}>
             Bridging Real-World Data with Ground Operations
           </span>
         </div>
 
         <p style={{
           color: C.grayLight, fontSize: "clamp(0.95rem, 1.8vw, 1.1rem)", lineHeight: 1.8,
-          maxWidth: 540, margin: "28px auto 0", fontFamily: "'Rajdhani', sans-serif", fontWeight: 400, letterSpacing: "0.02em",
+          maxWidth: 540, margin: "28px auto 0", fontFamily: "'Sora', sans-serif", fontWeight: 400, letterSpacing: "0.02em",
           opacity: visible ? 1 : 0, transition: "opacity 0.8s ease 0.8s",
         }}>
           We build high-performance SaaS products and custom software that solve real business challenges. From our own tools to bespoke solutions — built for impact.
@@ -228,24 +233,25 @@ function Hero() {
           opacity: visible ? 1 : 0, transition: "opacity 0.8s ease 1s",
         }}>
           <a href="#start" style={{
-            background: `linear-gradient(135deg, ${C.neon}22, ${C.neon}11)`,
-            color: C.neon, padding: "14px 36px", border: `1px solid ${C.neon}88`,
+            background: `linear-gradient(135deg, #57E6E6 0%, #3FD0D4 100%)`,
+            color: "#0B1120", padding: "14px 36px", border: "none",
             fontSize: 13, fontWeight: 700, textDecoration: "none",
-            fontFamily: "'Orbitron', sans-serif", letterSpacing: "0.08em", textTransform: "uppercase",
-            boxShadow: `0 0 25px ${C.neon}33, inset 0 0 25px ${C.neon}11`,
-            transition: "all 0.3s ease",
+            fontFamily: "'Sora', sans-serif", letterSpacing: "0.08em", textTransform: "uppercase",
+            boxShadow: `0 0 15px rgba(87, 230, 230, 0.4), 0 0 40px rgba(87, 230, 230, 0.2), 0 0 80px rgba(63, 208, 212, 0.1)`,
+            transition: "all 0.3s ease", borderRadius: 4,
           }}
-            onMouseOver={(e) => { e.target.style.boxShadow = `0 0 40px ${C.neon}55, inset 0 0 30px ${C.neon}22, 0 0 80px ${C.neon}22`; e.target.style.background = `linear-gradient(135deg, ${C.neon}33, ${C.neon}18)`; }}
-            onMouseOut={(e) => { e.target.style.boxShadow = `0 0 25px ${C.neon}33, inset 0 0 25px ${C.neon}11`; e.target.style.background = `linear-gradient(135deg, ${C.neon}22, ${C.neon}11)`; }}>
+            onMouseOver={(e) => { e.target.style.boxShadow = `0 0 20px rgba(87, 230, 230, 0.6), 0 0 50px rgba(87, 230, 230, 0.3), 0 0 100px rgba(63, 208, 212, 0.15)`; e.target.style.transform = "translateY(-2px)"; }}
+            onMouseOut={(e) => { e.target.style.boxShadow = `0 0 15px rgba(87, 230, 230, 0.4), 0 0 40px rgba(87, 230, 230, 0.2), 0 0 80px rgba(63, 208, 212, 0.1)`; e.target.style.transform = "translateY(0)"; }}>
             Start a project →
           </a>
           <a href="#services" style={{
-            color: C.grayLight, padding: "14px 36px", fontSize: 13, textDecoration: "none",
-            fontFamily: "'Rajdhani', sans-serif", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase",
-            border: `1px solid ${C.border}`, transition: "all 0.3s ease",
+            color: "#E6EDF3", padding: "14px 36px", fontSize: 13, textDecoration: "none",
+            fontFamily: "'Sora', sans-serif", fontWeight: 600, letterSpacing: "0.1em", textTransform: "uppercase",
+            border: "1px solid rgba(255,255,255,0.2)", background: "transparent",
+            transition: "all 0.3s ease", borderRadius: 4,
           }}
-            onMouseOver={(e) => { e.target.style.borderColor = `${C.neon}44`; e.target.style.color = C.neon; e.target.style.boxShadow = `0 0 20px ${C.neon}11`; }}
-            onMouseOut={(e) => { e.target.style.borderColor = C.border; e.target.style.color = C.grayLight; e.target.style.boxShadow = "none"; }}>
+            onMouseOver={(e) => { e.target.style.borderColor = "rgba(255,255,255,0.4)"; e.target.style.background = "rgba(255,255,255,0.05)"; }}
+            onMouseOut={(e) => { e.target.style.borderColor = "rgba(255,255,255,0.2)"; e.target.style.background = "transparent"; }}>
             Explore services
           </a>
         </div>
@@ -260,8 +266,8 @@ function Mission() {
     <section ref={ref} style={{ padding: "100px 1.5rem", textAlign: "center", background: C.deep, borderTop: `1px solid ${C.border}`, position: "relative" }}>
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.neon}33, transparent)`, boxShadow: `0 0 20px ${C.neon}22` }} />
       <div style={{ maxWidth: 700, margin: "0 auto", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s cubic-bezier(0.16, 1, 0.32, 1)" }}>
-        <h2 className="neon-breathe" style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 800, color: C.neon, letterSpacing: "0.06em", margin: 0 }}>BRDG</h2>
-        <p style={{ color: C.grayLight, fontSize: "clamp(1rem, 2vw, 1.1rem)", lineHeight: 1.8, marginTop: 24, fontFamily: "'Rajdhani', sans-serif", letterSpacing: "0.02em" }}>
+        <h2 className="neon-breathe" style={{ fontFamily: "'Sora', sans-serif", fontSize: "clamp(1.8rem, 4vw, 2.5rem)", fontWeight: 800, color: C.neon, letterSpacing: "0.06em", margin: 0 }}>BRDG</h2>
+        <p style={{ color: C.grayLight, fontSize: "clamp(1rem, 2vw, 1.1rem)", lineHeight: 1.8, marginTop: 24, fontFamily: "'Sora', sans-serif", letterSpacing: "0.02em" }}>
           We don't just write code — we <strong style={{ color: C.neonHot }}>bridge the gap</strong> between the data you collect and the teams who need it most.
           <br />Your operations deserve software built with purpose.
         </p>
@@ -296,8 +302,8 @@ function ServiceCard({ service, delay, visible }) {
       <div style={{ position: "absolute", bottom: 0, right: 0, width: 20, height: 1, background: hovered ? C.neon : C.border, transition: "background 0.3s" }} />
       <div style={{ position: "absolute", bottom: 0, right: 0, width: 1, height: 20, background: hovered ? C.neon : C.border, transition: "background 0.3s" }} />
       <div style={{ fontSize: 20, marginBottom: 16, color: hovered ? C.neon : C.gray, textShadow: hovered ? `0 0 12px ${C.neonGlow}` : "none", transition: "all 0.3s" }}>{service.icon}</div>
-      <h3 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 14, fontWeight: 600, color: C.white, margin: "0 0 10px", letterSpacing: "0.04em" }}>{service.title}</h3>
-      <p style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: 14, color: C.gray, lineHeight: 1.6, margin: 0 }}>{service.desc}</p>
+      <h3 style={{ fontFamily: "'Sora', sans-serif", fontSize: 14, fontWeight: 600, color: C.white, margin: "0 0 10px", letterSpacing: "0.04em" }}>{service.title}</h3>
+      <p style={{ fontFamily: "'Sora', sans-serif", fontSize: 14, color: C.gray, lineHeight: 1.6, margin: 0 }}>{service.desc}</p>
     </div>
   );
 }
@@ -308,8 +314,8 @@ function Services() {
     <section id="services" ref={ref} style={{ padding: "100px 1.5rem", position: "relative", background: `linear-gradient(180deg, ${C.deep} 0%, ${C.void} 100%)` }}>
       <div style={{ maxWidth: 1000, margin: "0 auto" }}>
         <div style={{ textAlign: "center", marginBottom: 60, opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: "all 0.6s ease" }}>
-          <span style={{ color: C.neon, fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase", fontFamily: "'Rajdhani', sans-serif", fontWeight: 600 }}>What we do</span>
-          <h2 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)", fontWeight: 700, color: C.white, marginTop: 12, letterSpacing: "0.04em" }}>
+          <span style={{ color: C.neon, fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase", fontFamily: "'Sora', sans-serif", fontWeight: 600 }}>What we do</span>
+          <h2 style={{ fontFamily: "'Sora', sans-serif", fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)", fontWeight: 700, color: C.white, marginTop: 12, letterSpacing: "0.04em" }}>
             Tools that drive <span className="neon-breathe-inline">real impact</span>
           </h2>
         </div>
@@ -328,14 +334,14 @@ function WhyBrdg() {
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.neon}22, transparent)` }} />
       <div style={{ maxWidth: 1000, margin: "0 auto", display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: 60, alignItems: "center" }}>
         <div style={{ opacity: visible ? 1 : 0, transform: visible ? "translateX(0)" : "translateX(-30px)", transition: "all 0.8s cubic-bezier(0.16, 1, 0.32, 1)" }}>
-          <span style={{ color: C.neon, fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase", fontFamily: "'Rajdhani', sans-serif", fontWeight: 600 }}>Why BRDG</span>
-          <h2 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 700, color: C.white, marginTop: 12, lineHeight: 1.3, letterSpacing: "0.03em" }}>
+          <span style={{ color: C.neon, fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase", fontFamily: "'Sora', sans-serif", fontWeight: 600 }}>Why BRDG</span>
+          <h2 style={{ fontFamily: "'Sora', sans-serif", fontSize: "clamp(1.5rem, 3vw, 2rem)", fontWeight: 700, color: C.white, marginTop: 12, lineHeight: 1.3, letterSpacing: "0.03em" }}>
             The bridge between your <span className="neon-breathe-inline">data and the field</span>
           </h2>
-          <p style={{ color: C.gray, fontSize: 15, lineHeight: 1.7, marginTop: 20, fontFamily: "'Rajdhani', sans-serif" }}>
+          <p style={{ color: C.gray, fontSize: 15, lineHeight: 1.7, marginTop: 20, fontFamily: "'Sora', sans-serif" }}>
             Businesses collect mountains of data but struggle to turn it into operational truth. BRDG closes that gap — both through our own SaaS products and custom-built software that connects real-world data directly to your ground teams.
           </p>
-          <p style={{ color: C.gray, fontSize: 15, lineHeight: 1.7, marginTop: 16, fontFamily: "'Rajdhani', sans-serif" }}>
+          <p style={{ color: C.gray, fontSize: 15, lineHeight: 1.7, marginTop: 16, fontFamily: "'Sora', sans-serif" }}>
             No generic solutions. No compromises. Every line of code is designed to solve <span style={{ color: C.neon, fontWeight: 600 }}>your</span> problem.
           </p>
         </div>
@@ -343,8 +349,8 @@ function WhyBrdg() {
           {[{ value: "100%", label: "Custom-built" }, { value: "24/7", label: "Dedicated support" }, { value: "10x", label: "Faster delivery" }].map((s) => (
             <div key={s.value} style={{ background: C.surface, border: `1px solid ${C.border}`, padding: "22px 28px", display: "flex", alignItems: "center", gap: 20, position: "relative", overflow: "hidden" }}>
               <div style={{ position: "absolute", left: 0, top: 0, bottom: 0, width: 2, background: C.neon, boxShadow: `0 0 10px ${C.neonGlow}, 0 0 20px ${C.neon}22` }} />
-              <span className="neon-breathe" style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 28, fontWeight: 900, color: C.neon, minWidth: 80 }}>{s.value}</span>
-              <span style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: 15, color: C.grayLight, letterSpacing: "0.04em" }}>{s.label}</span>
+              <span className="neon-breathe" style={{ fontFamily: "'Sora', sans-serif", fontSize: 28, fontWeight: 900, color: C.neon, minWidth: 80 }}>{s.value}</span>
+              <span style={{ fontFamily: "'Sora', sans-serif", fontSize: 15, color: C.grayLight, letterSpacing: "0.04em" }}>{s.label}</span>
             </div>
           ))}
         </div>
@@ -368,11 +374,11 @@ function FleetPro() {
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.neon}33, transparent)`, boxShadow: `0 0 15px ${C.neon}15` }} />
       <div style={{ maxWidth: 1000, margin: "0 auto", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s cubic-bezier(0.16, 1, 0.32, 1)" }}>
         <div style={{ textAlign: "center", marginBottom: 60 }}>
-          <span style={{ color: C.neon, fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase", fontFamily: "'Rajdhani', sans-serif", fontWeight: 600 }}>Our Products</span>
-          <h2 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)", fontWeight: 700, color: C.white, marginTop: 12, letterSpacing: "0.04em" }}>
+          <span style={{ color: C.neon, fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase", fontFamily: "'Sora', sans-serif", fontWeight: 600 }}>Our Products</span>
+          <h2 style={{ fontFamily: "'Sora', sans-serif", fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)", fontWeight: 700, color: C.white, marginTop: 12, letterSpacing: "0.04em" }}>
             FLEET <span className="neon-breathe-inline">PRO</span>
           </h2>
-          <p style={{ color: C.gray, fontSize: 15, lineHeight: 1.7, maxWidth: 580, margin: "16px auto 0", fontFamily: "'Rajdhani', sans-serif" }}>
+          <p style={{ color: C.gray, fontSize: 15, lineHeight: 1.7, maxWidth: 580, margin: "16px auto 0", fontFamily: "'Sora', sans-serif" }}>
             Construction equipment fleet management — simplified. Track allocations, manage billing, forecast revenue, and keep your fleet running at peak efficiency.
           </p>
         </div>
@@ -381,13 +387,13 @@ function FleetPro() {
             <div key={f.title} style={{ background: C.surface, border: `1px solid ${C.border}`, padding: 22, opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: `all 0.6s ease ${i * 60 + 200}ms`, position: "relative" }}>
               <div style={{ position: "absolute", top: 0, right: 0, width: 16, height: 1, background: C.neon, opacity: 0.4 }} />
               <div style={{ fontSize: 20, marginBottom: 12, color: C.neon, textShadow: `0 0 8px ${C.neonGlow}` }}>{f.icon}</div>
-              <h4 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: 12, fontWeight: 600, color: C.white, margin: "0 0 8px", letterSpacing: "0.05em" }}>{f.title}</h4>
-              <p style={{ fontFamily: "'Rajdhani', sans-serif", fontSize: 13, color: C.gray, lineHeight: 1.6, margin: 0 }}>{f.desc}</p>
+              <h4 style={{ fontFamily: "'Sora', sans-serif", fontSize: 12, fontWeight: 600, color: C.white, margin: "0 0 8px", letterSpacing: "0.05em" }}>{f.title}</h4>
+              <p style={{ fontFamily: "'Sora', sans-serif", fontSize: 13, color: C.gray, lineHeight: 1.6, margin: 0 }}>{f.desc}</p>
             </div>
           ))}
         </div>
         <div style={{ textAlign: "center", marginTop: 48 }}>
-          <a href="#start" style={{ color: C.neon, padding: "12px 28px", border: `1px solid ${C.neon}44`, fontSize: 12, fontWeight: 700, textDecoration: "none", fontFamily: "'Orbitron', sans-serif", letterSpacing: "0.08em", textTransform: "uppercase", transition: "all 0.3s" }}
+          <a href="#start" style={{ color: C.neon, padding: "12px 28px", border: `1px solid ${C.neon}44`, fontSize: 12, fontWeight: 700, textDecoration: "none", fontFamily: "'Sora', sans-serif", letterSpacing: "0.08em", textTransform: "uppercase", transition: "all 0.3s" }}
             onMouseOver={(e) => { e.target.style.boxShadow = `0 0 20px ${C.neon}33`; e.target.style.borderColor = C.neon; }}
             onMouseOut={(e) => { e.target.style.boxShadow = "none"; e.target.style.borderColor = `${C.neon}44`; }}>
             Request a demo →
@@ -410,7 +416,7 @@ function StartProject() {
 
   const inputStyle = {
     width: "100%", padding: "14px 16px", background: C.void, border: `1px solid ${C.border}`,
-    color: C.white, fontSize: 14, fontFamily: "'Rajdhani', sans-serif", letterSpacing: "0.02em",
+    color: C.white, fontSize: 14, fontFamily: "'Sora', sans-serif", letterSpacing: "0.02em",
     outline: "none", boxSizing: "border-box", transition: "border-color 0.3s, box-shadow 0.3s",
   };
 
@@ -424,10 +430,10 @@ function StartProject() {
           <div style={{ position: "absolute", bottom: 0, right: 0, width: 40, height: 1, background: C.neon, boxShadow: `0 0 10px ${C.neonGlow}` }} />
           <div style={{ position: "absolute", bottom: 0, right: 0, width: 1, height: 40, background: C.neon, boxShadow: `0 0 10px ${C.neonGlow}` }} />
 
-          <h2 style={{ fontFamily: "'Orbitron', sans-serif", fontSize: "clamp(1.3rem, 2.5vw, 1.7rem)", fontWeight: 700, color: C.white, margin: 0, letterSpacing: "0.04em" }}>
+          <h2 style={{ fontFamily: "'Sora', sans-serif", fontSize: "clamp(1.3rem, 2.5vw, 1.7rem)", fontWeight: 700, color: C.white, margin: 0, letterSpacing: "0.04em" }}>
             Ready to build<br /><span className="neon-breathe-inline">the tool you're missing?</span>
           </h2>
-          <p style={{ color: C.gray, fontSize: 14, lineHeight: 1.7, marginTop: 12, fontFamily: "'Rajdhani', sans-serif" }}>
+          <p style={{ color: C.gray, fontSize: 14, lineHeight: 1.7, marginTop: 12, fontFamily: "'Sora', sans-serif" }}>
             Let's talk about your project. From idea to deployment, we've got you — every step of the way.
           </p>
 
@@ -449,21 +455,22 @@ function StartProject() {
                 onFocus={(e) => { e.target.style.borderColor = C.neon; e.target.style.boxShadow = `0 0 15px ${C.neon}22`; }}
                 onBlur={(e) => { e.target.style.borderColor = C.border; e.target.style.boxShadow = "none"; }} />
               <button onClick={handleSubmit} style={{
-                width: "100%", background: `linear-gradient(135deg, ${C.neon}22, ${C.neon}11)`,
-                color: C.neon, padding: "14px 0", border: `1px solid ${C.neon}88`,
+                width: "100%", background: `linear-gradient(135deg, #57E6E6 0%, #3FD0D4 100%)`,
+                color: "#0B1120", padding: "14px 0", border: "none",
                 fontSize: 13, fontWeight: 700, cursor: "pointer",
-                fontFamily: "'Orbitron', sans-serif", letterSpacing: "0.08em", textTransform: "uppercase",
-                boxShadow: `0 0 25px ${C.neon}33, inset 0 0 25px ${C.neon}11`, transition: "all 0.3s",
+                fontFamily: "'Sora', sans-serif", letterSpacing: "0.08em", textTransform: "uppercase",
+                boxShadow: `0 0 15px rgba(87, 230, 230, 0.4), 0 0 40px rgba(87, 230, 230, 0.2), 0 0 80px rgba(63, 208, 212, 0.1)`,
+                transition: "all 0.3s", borderRadius: 4,
               }}
-                onMouseOver={(e) => { e.target.style.boxShadow = `0 0 40px ${C.neon}55, inset 0 0 30px ${C.neon}22`; }}
-                onMouseOut={(e) => { e.target.style.boxShadow = `0 0 25px ${C.neon}33, inset 0 0 25px ${C.neon}11`; }}>
+                onMouseOver={(e) => { e.target.style.boxShadow = `0 0 20px rgba(87, 230, 230, 0.6), 0 0 50px rgba(87, 230, 230, 0.3), 0 0 100px rgba(63, 208, 212, 0.15)`; e.target.style.transform = "translateY(-2px)"; }}
+                onMouseOut={(e) => { e.target.style.boxShadow = `0 0 15px rgba(87, 230, 230, 0.4), 0 0 40px rgba(87, 230, 230, 0.2), 0 0 80px rgba(63, 208, 212, 0.1)`; e.target.style.transform = "translateY(0)"; }}>
                 Start a project →
               </button>
             </div>
           ) : (
             <div style={{ marginTop: 32, padding: 24, background: `${C.neon}08`, border: `1px solid ${C.neon}33` }}>
-              <p className="neon-breathe" style={{ color: C.neon, fontSize: 15, fontWeight: 600, fontFamily: "'Orbitron', sans-serif", margin: 0, letterSpacing: "0.05em" }}>✓ TRANSMISSION RECEIVED</p>
-              <p style={{ color: C.gray, fontSize: 13, fontFamily: "'Rajdhani', sans-serif", marginTop: 8 }}>We'll be in touch shortly.</p>
+              <p className="neon-breathe" style={{ color: C.neon, fontSize: 15, fontWeight: 600, fontFamily: "'Sora', sans-serif", margin: 0, letterSpacing: "0.05em" }}>✓ TRANSMISSION RECEIVED</p>
+              <p style={{ color: C.gray, fontSize: 13, fontFamily: "'Sora', sans-serif", marginTop: 8 }}>We'll be in touch shortly.</p>
             </div>
           )}
         </div>
@@ -476,10 +483,10 @@ function Footer() {
   return (
     <footer style={{ padding: "40px 1.5rem", background: C.void, textAlign: "center", borderTop: `1px solid ${C.border}`, position: "relative" }}>
       <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 1, background: `linear-gradient(90deg, transparent, ${C.neon}15, transparent)` }} />
-      <p style={{ color: C.gray, fontSize: 12, fontFamily: "'Rajdhani', sans-serif", margin: 0, letterSpacing: "0.08em" }}>
+      <p style={{ color: C.gray, fontSize: 12, fontFamily: "'Sora', sans-serif", margin: 0, letterSpacing: "0.08em" }}>
         © {new Date().getFullYear()} BRDG — BRIDGING REAL-WORLD DATA WITH GROUND OPERATIONS
       </p>
-      <p style={{ color: C.gray, fontSize: 11, fontFamily: "'Rajdhani', sans-serif", margin: "6px 0 0", opacity: 0.5, letterSpacing: "0.1em" }}>
+      <p style={{ color: C.gray, fontSize: 11, fontFamily: "'Sora', sans-serif", margin: "6px 0 0", opacity: 0.5, letterSpacing: "0.1em" }}>
         SYDNEY, AUSTRALIA
       </p>
     </footer>
@@ -490,35 +497,50 @@ export default function App() {
   return (
     <div style={{ background: C.void, color: C.white, minHeight: "100vh" }}>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&display=swap');
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-        body { background: #020408; overflow-x: hidden; }
-        ::selection { background: #00D4FF33; color: #E8F4FF; }
+        body {
+          background: #0B1120;
+          overflow-x: hidden;
+          background-image:
+            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+          background-size: 40px 40px;
+        }
+        ::selection { background: #57E6E633; color: #E6EDF3; }
         ::-webkit-scrollbar { width: 4px; }
-        ::-webkit-scrollbar-track { background: #020408; }
-        ::-webkit-scrollbar-thumb { background: #0C2340; }
-        ::-webkit-scrollbar-thumb:hover { background: #00D4FF44; }
+        ::-webkit-scrollbar-track { background: #0B1120; }
+        ::-webkit-scrollbar-thumb { background: #1A2744; }
+        ::-webkit-scrollbar-thumb:hover { background: #57E6E644; }
 
         @keyframes gridScroll {
           0% { background-position: 0 0; }
           100% { background-position: 0 60px; }
         }
         @keyframes neonBreathe {
-          0%, 100% { text-shadow: 0 0 20px #00D4FF66, 0 0 40px #00D4FF66, 0 0 80px #00D4FF22; }
-          50% { text-shadow: 0 0 10px #00D4FF33, 0 0 20px #00D4FF22, 0 0 40px #00D4FF11; }
+          0%, 100% { text-shadow: 0 0 20px rgba(87, 230, 230, 0.6), 0 0 40px rgba(63, 208, 212, 0.4); }
+          50% { text-shadow: 0 0 10px rgba(87, 230, 230, 0.3), 0 0 20px rgba(63, 208, 212, 0.2); }
         }
-        @keyframes neonBreatheHero {
-          0%, 100% { text-shadow: 0 0 40px #00D4FF66, 0 0 80px #00D4FF44, 0 0 120px #00D4FF22, 0 0 200px #00D4FF11; }
-          50% { text-shadow: 0 0 20px #00D4FF44, 0 0 40px #00D4FF22, 0 0 60px #00D4FF11, 0 0 100px #00D4FF08; }
+        @keyframes heroGlow {
+          0%, 100% {
+            filter: drop-shadow(0 0 12px rgba(87, 230, 230, 0.4))
+                    drop-shadow(0 0 30px rgba(87, 230, 230, 0.2))
+                    drop-shadow(0 0 60px rgba(63, 208, 212, 0.1));
+          }
+          50% {
+            filter: drop-shadow(0 0 18px rgba(87, 230, 230, 0.5))
+                    drop-shadow(0 0 40px rgba(87, 230, 230, 0.3))
+                    drop-shadow(0 0 80px rgba(63, 208, 212, 0.15));
+          }
         }
         @keyframes dotPulse {
-          0%, 100% { opacity: 1; box-shadow: 0 0 6px #00D4FF, 0 0 12px #00D4FF66; }
-          50% { opacity: 0.3; box-shadow: 0 0 2px #00D4FF44; }
+          0%, 100% { opacity: 1; box-shadow: 0 0 6px #57E6E6, 0 0 12px rgba(87, 230, 230, 0.6); }
+          50% { opacity: 0.3; box-shadow: 0 0 2px rgba(87, 230, 230, 0.4); }
         }
         .neon-breathe { animation: neonBreathe 3s ease-in-out infinite; }
-        .neon-breathe-hero { animation: neonBreatheHero 4s ease-in-out infinite; }
-        .neon-breathe-inline { color: #00D4FF; animation: neonBreathe 3s ease-in-out infinite; }
+        .hero-title-glow { animation: heroGlow 4s ease-in-out infinite; }
+        .neon-breathe-inline { color: #57E6E6; animation: neonBreathe 3s ease-in-out infinite; }
         .dot-pulse { animation: dotPulse 2s ease-in-out infinite; }
 
         @media (max-width: 768px) {
