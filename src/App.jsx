@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from "react";
+import Particles, { initParticlesEngine } from "@tsparticles/react";
+import { loadSlim } from "@tsparticles/slim";
 
 const C = {
   neon: "#57E6E6",
@@ -151,6 +153,40 @@ function Navbar() {
   );
 }
 
+function ParticlesBg() {
+  const [init, setInit] = useState(false);
+
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadSlim(engine);
+    }).then(() => setInit(true));
+  }, []);
+
+  if (!init) return null;
+
+  return (
+    <Particles
+      id="tsparticles"
+      options={{
+        fullScreen: false,
+        background: { color: { value: "transparent" } },
+        fpsLimit: 60,
+        particles: {
+          color: { value: "#57E6E6" },
+          links: { color: "#57E6E6", distance: 150, enable: true, opacity: 0.15, width: 1 },
+          move: { enable: true, speed: 0.8, direction: "none", random: true, straight: false, outModes: { default: "out" } },
+          number: { density: { enable: true, area: 900 }, value: 60 },
+          opacity: { value: { min: 0.1, max: 0.4 }, animation: { enable: true, speed: 0.5, minimumValue: 0.1 } },
+          size: { value: { min: 1, max: 3 } },
+        },
+        interactivity: { events: { onHover: { enable: true, mode: "grab" } }, modes: { grab: { distance: 140, links: { opacity: 0.4 } } } },
+        detectRetina: true,
+      }}
+      style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", zIndex: 0, pointerEvents: "auto", overflow: "hidden" }}
+    />
+  );
+}
+
 function TronGrid() {
   return (
     <div style={{ position: "absolute", inset: 0, overflow: "hidden", perspective: "500px" }}>
@@ -178,41 +214,36 @@ function TronGrid() {
 }
 
 function Hero() {
-  const [ref, visible] = useInView(0.05);
   return (
-    <section id="hero" ref={ref} style={{
+    <section id="hero" style={{
       minHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
       textAlign: "center", position: "relative", overflow: "hidden",
       background: `linear-gradient(180deg, ${C.void} 0%, ${C.deep} 40%, #051020 70%, ${C.deep} 100%)`,
-      padding: "120px 1.5rem 80px",
+      padding: "0 1.5rem",
     }}>
       <TronGrid />
-      <div style={{
-        position: "relative", zIndex: 2,
-        opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(50px)",
-        transition: "all 1.2s cubic-bezier(0.16, 1, 0.32, 1)",
-      }}>
-        <h1 className="hero-title-glow" style={{
-          fontFamily: "'Sora', sans-serif", fontSize: "clamp(4.5rem, 14vw, 12rem)", fontWeight: 900,
-          lineHeight: 0.9, letterSpacing: "0.06em", margin: 0,
-          background: "linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, #57E6E6 40%, #3FD0D4 100%)",
-          WebkitBackgroundClip: "text",
-          WebkitTextFillColor: "transparent",
-          backgroundClip: "text",
-          filter: "drop-shadow(0 0 12px rgba(87, 230, 230, 0.4)) drop-shadow(0 0 30px rgba(87, 230, 230, 0.2)) drop-shadow(0 0 60px rgba(63, 208, 212, 0.1))",
-        }}>BRDG</h1>
+      <ParticlesBg />
+      <div style={{ position: "relative", zIndex: 2 }}>
+        <div className="hero-title-glow" style={{ isolation: "isolate" }}>
+          <h1 style={{
+            fontFamily: "'Sora', sans-serif", fontSize: "clamp(4.5rem, 14vw, 12rem)", fontWeight: 900,
+            lineHeight: 0.9, letterSpacing: "0.06em", margin: 0,
+            background: "linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, #57E6E6 40%, #3FD0D4 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}>BRDG</h1>
+        </div>
 
         <div style={{
-          width: visible ? "60%" : "0%", height: 2, margin: "16px auto 0",
+          width: "60%", height: 2, margin: "16px auto 0",
           background: `linear-gradient(90deg, transparent, ${C.neon}, transparent)`,
           boxShadow: `0 0 12px ${C.neon}88, 0 0 30px ${C.neonGlow}`,
-          transition: "width 1s ease 0.5s",
         }} />
 
         <div style={{
           display: "inline-flex", alignItems: "center", gap: 10, marginTop: 28,
           padding: "8px 20px", border: `1px solid ${C.border}`, background: `${C.neon}06`,
-          opacity: visible ? 1 : 0, transition: "opacity 0.8s ease 0.6s",
         }}>
           <span className="dot-pulse" style={{ width: 6, height: 6, background: C.neon }} />
           <span style={{ color: C.gray, fontSize: 11, letterSpacing: "0.2em", textTransform: "uppercase", fontFamily: "'Sora', sans-serif", fontWeight: 500 }}>
@@ -223,14 +254,12 @@ function Hero() {
         <p style={{
           color: C.grayLight, fontSize: "clamp(0.95rem, 1.8vw, 1.1rem)", lineHeight: 1.8,
           maxWidth: 540, margin: "28px auto 0", fontFamily: "'Sora', sans-serif", fontWeight: 400, letterSpacing: "0.02em",
-          opacity: visible ? 1 : 0, transition: "opacity 0.8s ease 0.8s",
         }}>
           We build high-performance SaaS products and custom software that solve real business challenges. From our own tools to bespoke solutions — built for impact.
         </p>
 
         <div style={{
           display: "flex", gap: 20, justifyContent: "center", marginTop: 44, flexWrap: "wrap",
-          opacity: visible ? 1 : 0, transition: "opacity 0.8s ease 1s",
         }}>
           <a href="#start" style={{
             background: `linear-gradient(135deg, #57E6E6 0%, #3FD0D4 100%)`,
@@ -542,6 +571,20 @@ export default function App() {
         .hero-title-glow { animation: heroGlow 4s ease-in-out infinite; }
         .neon-breathe-inline { color: #57E6E6; animation: neonBreathe 3s ease-in-out infinite; }
         .dot-pulse { animation: dotPulse 2s ease-in-out infinite; }
+
+        #tsparticles {
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
+          width: 100% !important;
+          height: 100% !important;
+          overflow: hidden !important;
+        }
+        #tsparticles canvas {
+          position: absolute !important;
+          top: 0 !important;
+          left: 0 !important;
+        }
 
         @media (max-width: 768px) {
           .nav-desktop { display: none !important; }
