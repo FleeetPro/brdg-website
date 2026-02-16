@@ -392,11 +392,11 @@ function FleetPro() {
   const [ref, visible] = useInView();
   const features = [
     { icon: "▦", title: "Real-time Dashboard", desc: "KPIs, revenue forecasts, and fleet status at a glance." },
-    { icon: "▥", title: "Equipment Allocation", desc: "Drag-and-drop timeline for equipment assignments across sites." },
-    { icon: "◈", title: "Billing & Invoicing", desc: "Automated monthly invoicing with working-day calculations." },
-    { icon: "▤", title: "Plant Requests", desc: "Streamlined request → approval → allocation workflow." },
-    { icon: "◎", title: "Site Management", desc: "GPS-mapped project sites with manager assignments." },
-    { icon: "△", title: "Revenue Forecast", desc: "Australian fiscal year forecasting with cumulative views." },
+    { icon: "▥", title: "Controlled Equipment Allocation", desc: "Drag-and-drop assignment with approval workflows and full audit history." },
+    { icon: "◈", title: "Financial Period Billing", desc: "Automated billing based on approved allocations and validated site presence. Aligned with financial periods and internal agreements." },
+    { icon: "▤", title: "Approval & Validation Workflow", desc: "Structured request → plant approval → site confirmation. Every movement is logged and accountable." },
+    { icon: "◎", title: "Audit & Governance", desc: "Full historical record of requests, approvals, transfers and financial impact. Built for multi-project environments and joint ventures." },
+    { icon: "△", title: "Revenue Forecasting", desc: "Accurately forecast equipment revenue across projects and financial periods — based on approved, validated allocations." },
   ];
   return (
     <section id="fleetpro" ref={ref} style={{ padding: "100px 1.5rem", position: "relative", background: `linear-gradient(180deg, ${C.void} 0%, ${C.deep} 100%)`, borderTop: `1px solid ${C.border}` }}>
@@ -404,22 +404,16 @@ function FleetPro() {
       <div style={{ maxWidth: 1000, margin: "0 auto", opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(30px)", transition: "all 0.8s cubic-bezier(0.16, 1, 0.32, 1)" }}>
         <div style={{ textAlign: "center", marginBottom: 60 }}>
           <span style={{ color: C.neon, fontSize: 11, letterSpacing: "0.25em", textTransform: "uppercase", fontFamily: "'Sora', sans-serif", fontWeight: 600 }}>Our Products</span>
-          <h2 style={{ fontFamily: "'Sora', sans-serif", fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)", fontWeight: 700, color: C.white, marginTop: 12, letterSpacing: "0.04em" }}>
-            FLEET <span className="neon-breathe-inline">PRO</span>
+          <h2 style={{ fontFamily: "'Sora', sans-serif", fontSize: "clamp(1.6rem, 3.5vw, 2.2rem)", fontWeight: 700, color: C.white, marginTop: 12, letterSpacing: "0.04em", display: "flex", alignItems: "center", justifyContent: "center", gap: "12px" }}>
+            <img src="/images/fleetpro-crane-icon.png" alt="" style={{ height: "40px", marginTop: "4px" }} />
+            <span>FLEET <span className="neon-breathe-inline">PRO</span></span>
           </h2>
           <p style={{ color: C.gray, fontSize: 15, lineHeight: 1.7, maxWidth: 580, margin: "16px auto 0", fontFamily: "'Sora', sans-serif" }}>
-            Construction equipment fleet management — simplified. Track allocations, manage billing, forecast revenue, and keep your fleet running at peak efficiency.
+            Enterprise equipment allocation & governance for construction. Track allocations. Control approvals. Validate transfers. Ensure financial transparency across every project.
           </p>
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 14 }}>
-          {features.map((f, i) => (
-            <div key={f.title} style={{ background: C.surface, border: `1px solid ${C.border}`, padding: 22, opacity: visible ? 1 : 0, transform: visible ? "translateY(0)" : "translateY(20px)", transition: `all 0.6s ease ${i * 60 + 200}ms`, position: "relative" }}>
-              <div style={{ position: "absolute", top: 0, right: 0, width: 16, height: 1, background: C.neon, opacity: 0.4 }} />
-              <div style={{ fontSize: 20, marginBottom: 12, color: C.neon, textShadow: `0 0 8px ${C.neonGlow}` }}>{f.icon}</div>
-              <h4 style={{ fontFamily: "'Sora', sans-serif", fontSize: 12, fontWeight: 600, color: C.white, margin: "0 0 8px", letterSpacing: "0.05em" }}>{f.title}</h4>
-              <p style={{ fontFamily: "'Sora', sans-serif", fontSize: 13, color: C.gray, lineHeight: 1.6, margin: 0 }}>{f.desc}</p>
-            </div>
-          ))}
+          {features.map((f, i) => <ServiceCard key={f.title} service={f} delay={i * 60 + 200} visible={visible} />)}
         </div>
         <div style={{ textAlign: "center", marginTop: 48 }}>
           <a href="#start" style={{ color: C.neon, padding: "12px 28px", border: `1px solid ${C.neon}44`, fontSize: 12, fontWeight: 700, textDecoration: "none", fontFamily: "'Sora', sans-serif", letterSpacing: "0.08em", textTransform: "uppercase", transition: "all 0.3s" }}
@@ -532,10 +526,6 @@ export default function App() {
         body {
           background: #0B1120;
           overflow-x: hidden;
-          background-image:
-            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-          background-size: 40px 40px;
         }
         ::selection { background: #57E6E633; color: #E6EDF3; }
         ::-webkit-scrollbar { width: 4px; }
