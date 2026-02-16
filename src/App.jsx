@@ -187,32 +187,6 @@ function ParticlesBg() {
   );
 }
 
-function TronGrid() {
-  return (
-    <div style={{ position: "absolute", inset: 0, overflow: "hidden", perspective: "500px" }}>
-      <div style={{
-        position: "absolute", bottom: 0, left: "-50%", right: "-50%", height: "60%",
-        transformOrigin: "center bottom", transform: "rotateX(60deg)",
-        backgroundImage: `linear-gradient(rgba(87, 230, 230, 0.1) 1px, transparent 1px), linear-gradient(90deg, rgba(87, 230, 230, 0.1) 1px, transparent 1px)`,
-        backgroundSize: "60px 60px",
-        maskImage: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 90%)",
-        WebkitMaskImage: "linear-gradient(to top, rgba(0,0,0,0.6) 0%, transparent 90%)",
-        animation: "gridScroll 4s linear infinite",
-      }} />
-      <div style={{
-        position: "absolute", top: "15%", left: "50%", transform: "translateX(-50%)",
-        width: "80%", height: "300px",
-        background: `radial-gradient(ellipse, rgba(87, 230, 230, 0.05) 0%, transparent 70%)`,
-      }} />
-      <div style={{
-        position: "absolute", top: "42%", left: 0, right: 0, height: 1,
-        background: `linear-gradient(90deg, transparent, rgba(87, 230, 230, 0.2), rgba(87, 230, 230, 0.35), rgba(87, 230, 230, 0.2), transparent)`,
-        boxShadow: `0 0 20px rgba(87, 230, 230, 0.2), 0 0 60px rgba(63, 208, 212, 0.1)`,
-      }} />
-    </div>
-  );
-}
-
 function Hero() {
   return (
     <section id="hero" style={{
@@ -221,7 +195,6 @@ function Hero() {
       background: `linear-gradient(180deg, ${C.void} 0%, ${C.deep} 40%, #051020 70%, ${C.deep} 100%)`,
       padding: "0 1.5rem",
     }}>
-      <TronGrid />
       <ParticlesBg />
       <div style={{ position: "relative", zIndex: 2 }}>
         <div className="hero-title-glow" style={{ isolation: "isolate" }}>
@@ -533,10 +506,6 @@ export default function App() {
         ::-webkit-scrollbar-thumb { background: #1A2744; }
         ::-webkit-scrollbar-thumb:hover { background: #57E6E644; }
 
-        @keyframes gridScroll {
-          0% { background-position: 0 0; }
-          100% { background-position: 0 60px; }
-        }
         @keyframes neonBreathe {
           0%, 100% { text-shadow: 0 0 20px rgba(87, 230, 230, 0.6), 0 0 40px rgba(63, 208, 212, 0.4); }
           50% { text-shadow: 0 0 10px rgba(87, 230, 230, 0.3), 0 0 20px rgba(63, 208, 212, 0.2); }
