@@ -403,11 +403,23 @@ function FleetPro() {
 function StartProject() {
   const [ref, visible] = useInView();
   const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState(null); // null | 'sending' | 'success' | 'error'
 
-  const handleSubmit = () => {
-    window.location.href = `mailto:contact@brdg-group.com?subject=Project inquiry from ${form.name}&body=${encodeURIComponent(form.message)}%0A%0AFrom: ${form.name} (${form.email})`;
-    setSubmitted(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setStatus('sending');
+    try {
+      const res = await fetch('https://brdg-contact-form.legalljp.workers.dev/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: form.name, email: form.email, message: form.message }),
+      });
+      if (!res.ok) throw new Error('Request failed');
+      setStatus('success');
+      setForm({ name: '', email: '', message: '' });
+    } catch {
+      setStatus('error');
+    }
   };
 
   const inputStyle = {
@@ -433,7 +445,7 @@ function StartProject() {
             Let's talk about your project. From idea to deployment, we've got you — every step of the way.
           </p>
 
-          {!submitted ? (
+          {status !== 'success' ? (
             <div style={{ marginTop: 32, textAlign: "left" }}>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 12 }}>
                 <input type="text" placeholder="Your name" value={form.name}
@@ -450,17 +462,22 @@ function StartProject() {
                 style={{ ...inputStyle, resize: "vertical", marginBottom: 20 }}
                 onFocus={(e) => { e.target.style.borderColor = C.neon; e.target.style.boxShadow = `0 0 15px ${C.neon}22`; }}
                 onBlur={(e) => { e.target.style.borderColor = C.border; e.target.style.boxShadow = "none"; }} />
-              <button onClick={handleSubmit} style={{
-                width: "100%", background: `linear-gradient(135deg, #57E6E6 0%, #3FD0D4 100%)`,
+              {status === 'error' && (
+                <p style={{ color: '#ff6b6b', fontSize: 13, fontFamily: "'Sora', sans-serif", marginBottom: 12, textAlign: 'center' }}>
+                  Something went wrong. Please try again.
+                </p>
+              )}
+              <button onClick={handleSubmit} disabled={status === 'sending'} style={{
+                width: "100%", background: status === 'sending' ? '#4a5568' : `linear-gradient(135deg, #57E6E6 0%, #3FD0D4 100%)`,
                 color: "#0B1120", padding: "14px 0", border: "none",
-                fontSize: 13, fontWeight: 700, cursor: "pointer",
+                fontSize: 13, fontWeight: 700, cursor: status === 'sending' ? 'not-allowed' : 'pointer',
                 fontFamily: "'Sora', sans-serif", letterSpacing: "0.08em", textTransform: "uppercase",
-                boxShadow: `0 0 15px rgba(87, 230, 230, 0.4), 0 0 40px rgba(87, 230, 230, 0.2), 0 0 80px rgba(63, 208, 212, 0.1)`,
-                transition: "all 0.3s", borderRadius: 4,
+                boxShadow: status === 'sending' ? 'none' : `0 0 15px rgba(87, 230, 230, 0.4), 0 0 40px rgba(87, 230, 230, 0.2), 0 0 80px rgba(63, 208, 212, 0.1)`,
+                transition: "all 0.3s", borderRadius: 4, opacity: status === 'sending' ? 0.7 : 1,
               }}
-                onMouseOver={(e) => { e.target.style.boxShadow = `0 0 20px rgba(87, 230, 230, 0.6), 0 0 50px rgba(87, 230, 230, 0.3), 0 0 100px rgba(63, 208, 212, 0.15)`; e.target.style.transform = "translateY(-2px)"; }}
-                onMouseOut={(e) => { e.target.style.boxShadow = `0 0 15px rgba(87, 230, 230, 0.4), 0 0 40px rgba(87, 230, 230, 0.2), 0 0 80px rgba(63, 208, 212, 0.1)`; e.target.style.transform = "translateY(0)"; }}>
-                Start a project →
+                onMouseOver={(e) => { if (status !== 'sending') { e.target.style.boxShadow = `0 0 20px rgba(87, 230, 230, 0.6), 0 0 50px rgba(87, 230, 230, 0.3), 0 0 100px rgba(63, 208, 212, 0.15)`; e.target.style.transform = "translateY(-2px)"; } }}
+                onMouseOut={(e) => { if (status !== 'sending') { e.target.style.boxShadow = `0 0 15px rgba(87, 230, 230, 0.4), 0 0 40px rgba(87, 230, 230, 0.2), 0 0 80px rgba(63, 208, 212, 0.1)`; e.target.style.transform = "translateY(0)"; } }}>
+                {status === 'sending' ? 'Sending...' : 'Start a project →'}
               </button>
             </div>
           ) : (
