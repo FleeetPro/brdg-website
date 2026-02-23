@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import FleetProPage from "./pages/FleetProPage.jsx";
 import Particles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
 
@@ -388,11 +389,23 @@ function FleetPro() {
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 14 }}>
           {features.map((f, i) => <ServiceCard key={f.title} service={f} delay={i * 60 + 200} visible={visible} />)}
         </div>
-        <div style={{ textAlign: "center", marginTop: 48 }}>
+        <div style={{ textAlign: "center", marginTop: 48, display: "flex", gap: 16, justifyContent: "center", flexWrap: "wrap" }}>
           <a href="#start" style={{ color: C.neon, padding: "12px 28px", border: `1px solid ${C.neon}44`, fontSize: 12, fontWeight: 700, textDecoration: "none", fontFamily: "'Sora', sans-serif", letterSpacing: "0.08em", textTransform: "uppercase", transition: "all 0.3s" }}
             onMouseOver={(e) => { e.target.style.boxShadow = `0 0 20px ${C.neon}33`; e.target.style.borderColor = C.neon; }}
             onMouseOut={(e) => { e.target.style.boxShadow = "none"; e.target.style.borderColor = `${C.neon}44`; }}>
             Request a demo →
+          </a>
+          <a href="/fleetpro" style={{
+            display: "inline-block", padding: "12px 32px", borderRadius: 8,
+            background: `linear-gradient(135deg, ${C.neon}, #3B82F6)`,
+            color: "#0B1120", fontFamily: "'Sora', sans-serif",
+            fontSize: 12, fontWeight: 700, textDecoration: "none",
+            letterSpacing: "0.08em", textTransform: "uppercase",
+            transition: "transform 0.2s ease, box-shadow 0.2s ease",
+          }}
+            onMouseOver={(e) => { e.target.style.transform = "translateY(-2px)"; e.target.style.boxShadow = `0 8px 20px ${C.neon}44`; }}
+            onMouseOut={(e) => { e.target.style.transform = "translateY(0)"; e.target.style.boxShadow = "none"; }}>
+            Learn More →
           </a>
         </div>
       </div>
@@ -507,6 +520,7 @@ function Footer() {
 }
 
 export default function App() {
+  if (window.location.pathname === "/fleetpro") return <FleetProPage />;
   return (
     <div style={{ background: C.void, color: C.white, minHeight: "100vh" }}>
       <style>{`
