@@ -127,12 +127,24 @@ function Hero() {
           }}>Fleet Management Platform</span>
         </div>
 
-        {/* Crane icon */}
+        {/* Logo */}
         <div style={{
-          display: "flex", justifyContent: "center", marginBottom: 28,
+          display: "flex", justifyContent: "center", marginBottom: 20,
           animation: "fpIconGlow 3s ease-in-out infinite",
         }}>
-          <CraneIcon size={56} />
+          <img src="/images/fleetpro-crane-icon.png" alt="FleetPro" style={{ height: 64 }} />
+        </div>
+
+        {/* App name */}
+        <div style={{
+          fontFamily: "'Sora', sans-serif",
+          fontSize: "clamp(28px, 4vw, 40px)",
+          fontWeight: 800,
+          color: "#F1F5F9",
+          letterSpacing: "-0.02em",
+          marginBottom: 16,
+        }}>
+          FleetPro
         </div>
 
         {/* Title */}
